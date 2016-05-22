@@ -3,7 +3,8 @@ var boot = function(){console.log('Commencing game...')}
 boot.prototype = 
 {
 	preload:function(){
-		this.game.load.image('loading', 'assets/loading_x1.png')
+		this.game.load.image('loading_border', 'assets/loading_border.png')
+		this.game.load.image('loading', 'assets/loading_interior.png')
 	},
 	create:function(){
 
@@ -13,10 +14,15 @@ boot.prototype =
 		if(this.isDeviceMobile()) // if mobile
 		{
 			// using outerWidth fixes the scaling problem in mobile devices. FINALLY SOLVED THIS CRAP!
-			this.scale.minWidth = window.outerWidth
-			this.scale.minHeight = window.outerHeight
-			this.scale.maxWidth = window.outerWidth
-			this.scale.maxHeight = window.outerHeight
+			// this.scale.minWidth = window.outerWidth
+			// this.scale.minHeight = window.outerHeight
+			// this.scale.maxWidth = window.outerWidth
+			// this.scale.maxHeight = window.outerHeight
+
+			this.scale.minWidth = window.innerWidth
+			this.scale.minHeight = window.innerHeight
+			this.scale.maxWidth = window.innerWidth
+			this.scale.maxHeight = window.innerHeight
 		}
 		else // if on computer
 		{
@@ -25,6 +31,7 @@ boot.prototype =
 			this.scale.maxWidth = 450
 			this.scale.maxHeight = 600
 		}
+
 		this.scale.pageAlignHorizontally = true
 		this.scale.pageAlignVertically = true
 		this.scale.setScreenSize = true

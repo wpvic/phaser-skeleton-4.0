@@ -3,6 +3,8 @@ var gameOver = function(){}
 gameOver.prototype = {
 	create:function(){
 		this.game.stage.backgroundColor = BG_COLOR
+		// Bg image
+		this.bg = this.game.add.image(0,0,'bg')
 
 		var w = this.game.width
 		var h = this.game.height
@@ -30,6 +32,7 @@ gameOver.prototype = {
 		this.game.input.onDown.add(listener, this)
 		function listener(game)
 		{
+			BG_COLOR = COLORS_PASTEL[Math.floor(Math.random()*(COLORS_PASTEL.length-1))]
 			this.game.state.start('play')
 		}
 	}

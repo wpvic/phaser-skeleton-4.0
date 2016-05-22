@@ -6,8 +6,8 @@ mainMenu.prototype = {
 	create:function(){
 		// BG COLOR
 		this.game.stage.backgroundColor = BG_COLOR
-		// holds all animated text: no need to touch this
-		this.all_to_be_animated_text_entities = []
+		// Bg image
+		this.bg = this.game.add.image(0,0,'bg')
 
 		var w = this.game.width
 		var h = this.game.height
@@ -32,18 +32,6 @@ mainMenu.prototype = {
 		function listener(game)
 		{
 			this.game.state.start('play')
-		}
-	},
-
-	update:function()
-	{		
-
-		for(var i=0; i<this.all_to_be_animated_text_entities.length;i++)
-		{
-			// animateFontSize(text_item_from_all_to_be_animated_text_entities, max_size, min_size, size_change_rate=1)
-			var max_size = this.all_to_be_animated_text_entities[i][2]
-			var min_size = this.all_to_be_animated_text_entities[i][3]
-			this.animateFontSize(this.all_to_be_animated_text_entities[i], max_size, min_size,1)
 		}
 	}
 }
