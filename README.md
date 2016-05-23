@@ -1,2 +1,1 @@
-# Keep Flying
-Javascript Endless Runner, optimized for mobile
+# Game Base Template - 4.0

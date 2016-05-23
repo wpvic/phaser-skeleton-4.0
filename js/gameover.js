@@ -9,6 +9,12 @@ gameOver.prototype = {
 		var w = this.game.width
 		var h = this.game.height
 
+		// Title
+		var logo = this.game.add.bitmapText(w/2, -100, 'fontUsed', '', 75)
+		logo.text = GAMETITLE
+		logo.anchor.setTo(0.5, 0.5)
+		this.game.add.tween(logo).to({ y: h/2-80 }, 1000, Phaser.Easing.Bounce.Out).start()
+		
 		if(score>BEST_SCORE)
 		{
 			var message = this.game.add.bitmapText(w/2, -100, 'fontUsed', '', 30)

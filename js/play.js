@@ -9,29 +9,27 @@ play.prototype = {
 		// Game width and height for convenience
 		w = this.game.width
 		h = this.game.height
-
-		// Platform width
-		platform_width = this.game.cache.getImage('obstacle').width
-
-		// Score sound
-		this.sound.score = this.game.add.audio('score')
-		this.sound.score.volume = .4
-
-		// Death sound
-		this.sound.kill = this.game.add.audio('kill')
-
-		// Music
-		this.music = this.game.add.sound('music')
-		this.music.play('', 0, 0.5, true)
-
 		score = 0
-
 		// Bg color
 		this.game.stage.backgroundColor = BG_COLOR
 		// Bg image
 		this.bg = this.game.add.image(0,0,'bg')
 
-		this.frame_counter = 0
+		// Platform width
+		platform_width = this.game.cache.getImage('obstacle').width
+
+		// Score sound
+		// this.sound.score = this.game.add.audio('score')
+		// this.sound.score.volume = .4
+
+		// Death sound
+		// this.sound.kill = this.game.add.audio('kill')
+
+		// Music
+		// this.music = this.game.add.sound('music')
+		// this.music.play('', 0, 0.5, true)
+
+
 		this.physics.startSystem(Phaser.Physics.ARCADE)
 
 		// Obstacles
@@ -40,12 +38,10 @@ play.prototype = {
 		// Player
 		this.player = this.game.add.sprite(this.game.width/2, 250, 'player')
 		this.game.physics.enable(this.player, Phaser.Physics.ARCADE)
-		this.player.jump_speed = -500
 		this.player.enableBody = true
 		this.player.body.collideWorldBounds = true
 		this.player.anchor.setTo(.5,.5)
 		this.player.body.setSize(20,30)
-
 
 		// Score label
 		this.score = 0
@@ -62,8 +58,11 @@ play.prototype = {
 	update:function()
 	{
 		this.bmpText.text = score
+
+		// Collision
 		this.game.physics.arcade.overlap(this.player, this.obstacles, this.killPlayer, null, this)
 
+		// Spawn enemies
 		if(this.frame_counter%90 == 0)
 		{
 			var gap = 120
@@ -73,12 +72,11 @@ play.prototype = {
 			this.spawnObstacle('obstacle', w/2 + platform_width/2 + gap/2 + offset, this.game.height, speed=200, has_given_point=true)
 		}
 
-		this.obstacles.forEachAlive(this.scorePoint, this)
 		this.move()
 		this.frame_counter++
 	},
 
-	spawnObstacle:function(entity,x,y,speed,has_given_point)
+	spawnObstacle:function(entity,x,y,speed)
 	{
 		var obstacle = this.obstacles.create(x,y,entity)
 
@@ -96,6 +94,7 @@ play.prototype = {
 		obstacle.has_given_point = has_given_point
 
 		obstacle.checkWorldBounds = true;
+		// Kill obstacle/enemy if vertically out of bounds
 		obstacle.events.onOutOfBounds.add(this.killObstacleIfHeightLessThanZero, this);
 	},
 
@@ -107,49 +106,26 @@ play.prototype = {
 		}
 	},
 
-	scorePoint:function(obstacle)
-	{
-		if(obstacle.y < this.player.y && !obstacle.has_given_point)
-		{
-			score++
-			this.sound.score.play()
-			obstacle.has_given_point = true
-		}
-	},
+	scorePoint:function(obstacle){},
 
 	killPlayer:function(player,thing)
 	{
-		this.sound.kill.play()
 		this.game.plugins.screenShake.shake(20);
 		player.kill()
-		this.game.add.tween(this.music).to({volume:0}, 1200).start()
-		this.music.stop()
 		this.game.state.start('gameOver')
 	},
 
 	// Tap on touchscreen or click with mouse
-	onDown:function(pointer)
-	{
-	},
+	onDown:function(pointer){},
 
 	// Move player
 	move:function()
 	{
 		if(this.game.input.activePointer.isDown)
 		{    
-			this.player.body.velocity.x -= 35
-			if(this.player.angle < 30)
-			{
-				this.player.angle += 2
-			}
 		}
 		else
 		{
-			this.player.body.velocity.x += 35
-			if(this.player.angle > -30)
-			{
-				this.player.angle -= 2
-			}
 		}
 	},
 

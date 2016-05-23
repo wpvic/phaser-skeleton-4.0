@@ -1,10 +1,10 @@
-var boot = function(){console.log('Commencing game...')}
+var boot = function(){}
 
 boot.prototype = 
 {
 	preload:function(){
-		this.game.load.image('loading_border', 'assets/loading_border.png')
-		this.game.load.image('loading', 'assets/loading_interior.png')
+		this.game.load.image('loading_border', 'images/loading_border.png')
+		this.game.load.image('loading', 'images/loading_interior.png')
 	},
 	create:function(){
 
